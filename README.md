@@ -1,4 +1,4 @@
-# Safra Plus | Inteligencia de Dados e Decisao Agricola
+# Safra Plus 
 
 ## 1. Proposito do Sistema
 O Safra Plus e uma plataforma de suporte a decisao estrategica voltada ao agronegocio. O sistema integra dados economicos com variaveis agricolas para mitigar o risco financeiro do pequeno e medio produtor rural.
