@@ -1,0 +1,25 @@
+package br.com.safraplus.notification_service;
+
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+
+@SpringBootApplication(
+		// Desabilita a autoconfiguração do JPA e do DataSource para este serviço
+		exclude = {
+				DataSourceAutoConfiguration.class,
+				JpaRepositoriesAutoConfiguration.class,
+				HibernateJpaAutoConfiguration.class
+		}
+)
+@EnableRabbit
+public class NotificationServiceApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(NotificationServiceApplication.class, args);
+	}
+
+}

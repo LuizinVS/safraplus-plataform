@@ -1,0 +1,129 @@
+version: '3.8'
+
+services:
+  # --- BANCOS DE DADOS E BROKER ---
+  postgres-db:
+    image: postgres:14-alpine
+    container_name: postgres-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=safraplus
+      - POSTGRES_PASSWORD=safraplus
+      - POSTGRES_DB=safraplus_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  mongo-db:
+    image: mongo:latest
+    container_name: mongo-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  # --- MICROSSERVIÇOS JAVA ---
+  auth-service:
+    build:
+      context: ./backend/auth-service
+    container_name: auth-service
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres-db
+      - rabbitmq
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/safraplus_db
+      - SPRING_DATASOURCE_USERNAME=safraplus
+      - SPRING_DATASOURCE_PASSWORD=safraplus
+      - SPRING_RABBITMQ_HOST=rabbitmq
+
+  capital-service:
+    build:
+      context: ./backend/capital-service
+    container_name: capital-service
+    ports:
+      - "8082:8080"
+    depends_on:
+      - postgres-db
+      - rabbitmq
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/safraplus_db
+      - SPRING_DATASOURCE_USERNAME=safraplus
+      - SPRING_DATASOURCE_PASSWORD=safraplus
+      - SPRING_RABBITMQ_HOST=rabbitmq
+
+  notification-service:
+    build:
+      context: ./backend/notification-service
+    container_name: notification-service
+    ports:
+      - "8083:8080"
+    depends_on:
+      - rabbitmq
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq
+
+  # --- MICROSSERVIÇOS PYTHON ---
+  scraper-api:
+    build:
+      # CORREÇÃO 1: O contexto deve apontar para a pasta real do scraper
+      context: ./scraper-api
+    container_name: scraper-api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo-db
+      - rabbitmq
+    environment:
+      - MONGO_DB_URL=mongodb://mongo-db:27017/
+      - MONGO_DB_NAME=safraplus_historico
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
+    volumes:
+      # CORREÇÃO 1: O volume deve ser igual ao contexto
+      - ./scraper-api:/app
+
+  recommender-service-python:
+    build:
+      context: ./backend/recommendation-service-python
+    container_name: recommendation-engine
+    depends_on:
+      - mongo-db
+      - rabbitmq
+      - postgres-db
+    environment:
+      - MONGO_DB_URL=mongodb://mongo-db:27017/
+      - MONGO_DB_NAME=safraplus_historico
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
+      - POSTGRES_URL=postgresql://safraplus:safraplus@postgres-db:5432/safraplus_db
+    volumes:
+      - ./backend/recommendation-service-python:/app
+
+  # --- NOSSO NOVO SERVIÇO DE FRONT-END ---
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - auth-service
+      - capital-service
+      - scraper-api
+      - recommender-service-python
+      - notification-service
+
+  # --- VOLUMES PARA PERSISTIR DADOS ---
+volumes:
+  postgres_data:
+  mongo_data:
