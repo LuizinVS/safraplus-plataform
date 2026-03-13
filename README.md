@@ -1,4 +1,4 @@
-# Safra Plus 🌾 | Inteligência de Dados para o Campo
+# Safra Plus
 
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
@@ -9,14 +9,14 @@
 
 ---
 
-### 📖 Sobre o Projeto
+### Sobre o Projeto
 O **Safra Plus** é uma plataforma de suporte à decisão desenvolvida para pequenos produtores rurais. O sistema resolve um dilema real do campo: **"Vale mais a pena investir no plantio agora ou deixar o capital rendendo na Selic?"**.
 
 Através de uma integração inteligente entre dados agrícolas e índices financeiros, o sistema gera recomendações precisas para maximizar a rentabilidade do agricultor.
 
 ---
 
-### 🛠️ Diferenciais Técnicos (Stack)
+### Diferenciais Técnicos (Stack)
 
 * **Backend:** Desenvolvido em **Java + Spring Boot**, focado em uma API REST de alta performance.
 * **Frontend:** Interface construída com **React**, priorizando a experiência do usuário (UX).
@@ -27,7 +27,7 @@ Através de uma integração inteligente entre dados agrícolas e índices finan
 
 ---
 
-### 🚀 Como Rodar a Aplicação
+### Como Rodar a Aplicação
 
 Para subir todo o ecossistema (Backend, Frontend, RabbitMQ e Banco de Dados), basta ter o Docker instalado e executar:
 
