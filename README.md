@@ -1,206 +1,79 @@
-# 🌾 Safra Plus  
-### Plataforma Inteligente de Análise Financeira para Decisão Agrícola
-
-O **Safra Plus** é uma plataforma de suporte à decisão estratégica voltada ao agronegócio, que integra **dados econômicos em tempo real**, análise financeira e projeções agrícolas para auxiliar produtores na tomada de decisões sobre **alocação de capital e viabilidade de safra**.
-
-O sistema compara o **retorno estimado da produção agrícola** com indicadores financeiros como a **Taxa Selic**, reduzindo o risco econômico para pequenos e médios produtores.
-
----
-
-## 🚀 Visão Geral da Solução
-
-O projeto foi desenvolvido utilizando uma arquitetura **distribuída e orientada a eventos**, garantindo:
-
-- Escalabilidade horizontal  
-- Desacoplamento entre serviços  
-- Processamento assíncrono de tarefas pesadas  
-- Facilidade de deploy em ambientes cloud  
-
-A plataforma é composta por:
-
-- Frontend analítico em **React**
-- Backend principal em **Spring Boot**
-- Serviço de inteligência financeira em **Python**
-- Mensageria via **RabbitMQ**
-- Persistência em **Banco Relacional**
-- Infraestrutura containerizada com **Docker**
-
----
-
-## 🧠 Arquitetura do Sistema
-
-### 📊 Fluxo Macro
-
-1. O usuário interage com o **Frontend (SPA)**  
-2. O Frontend consome a **API Core (Spring Boot)**  
-3. O Backend envia tarefas intensivas para o **Worker Python**  
-4. O Worker processa scraping e cálculos financeiros  
-5. Os resultados são persistidos no banco  
-6. O Backend retorna análises consolidadas ao usuário  
-
-### 📐 Diagrama Arquitetural
-
-  Usuário
-       │
-       ▼
- ┌───────────┐
- │ Frontend  │
- │  React    │
- └─────┬─────┘
-       │ HTTP
-       ▼
- ┌──────────────┐
- │ Core Backend │
- │ Spring Boot  │
- └─────┬────────┘
-       │ AMQP
-       ▼
- ┌──────────────┐
- │ Python Worker│
- │ Scraper + IA │
- └─────┬────────┘
-       │
-       ▼
-    Database
-
-    ---
-
-## 🛠️ Tecnologias Utilizadas
-
-### 🎨 Frontend
-- React 18  
-- JavaScript ES6+  
-- Hooks e Context API  
-- Axios  
-
-### ⚙️ Backend
-- Java 17  
-- Spring Boot 3  
-- Spring Security  
-- JPA / Hibernate  
-- Maven  
-
-### 🧠 Inteligência de Dados
-- Python 3.10+  
-- Scrapy / Requests  
-- Modelos de cálculo financeiro  
-
-### 📡 Mensageria
-- RabbitMQ (AMQP)
-
-### 🗄️ Banco de Dados
-- PostgreSQL ou MySQL  
-
-### 🐳 Infraestrutura
-- Docker  
-- Docker Compose  
-
----
-
-## 📂 Estrutura do Projeto
-
-safraplus-platform/
-│
-├── backend/ → API principal (regras de negócio)
-├── frontend/ → Interface web analítica
-├── scraper-api/ → Worker Python e coleta de dados financeiros
-├── docker/ → Configurações de containers
-├── docs/ → Documentação complementar
-└── docker-compose.yml → Orquestração completa do ambiente
-
-
----
-
-## ⚙️ Como Executar o Projeto
-
-### ✅ Pré-requisitos
-
-- Docker + Docker Compose  
-- Git  
-- (Opcional) Java 17  
-- (Opcional) Node 18  
-
-### ▶️ Execução Completa (Recomendado)
-
-```bash
-git clone https://github.com/LuizinVS/safraplus-platform.git
-cd safraplus-platform
-
-docker-compose up --build
-
-Variáveis de Ambiente
-
-O projeto utiliza .env para configuração.
-
-Exemplo:
-
-DB_PASSWORD=guest
-RABBITMQ_URL=amqp://rabbitmq:5672
-FINANCE_API_KEY=your_key_here
-
-📡 Endpoints Principais
-Método	Endpoint	Descrição
-POST	/api/v1/auth/login	Autenticação
-GET	/api/v1/recommendations	Análise Safra vs Selic
-POST	/api/v1/safra	Cadastro de produção
-🧪 Testes
-Backend
-./mvnw test
-
-Frontend
-npm test
-
-🚀 Estratégia de Deploy
-
-O sistema foi projetado para deploy em ambientes cloud modernos:
-
-AWS ECS
-
-Kubernetes
-
-Docker Swarm
-
-Pipeline recomendado:
-
-Build automático com GitHub Actions
-
-Push de imagens para Docker Hub
-
-Deploy automatizado
-
-🔄 Fluxo de Desenvolvimento
-
-Modelo baseado em GitFlow simplificado:
-
-main → produção
-
-develop → integração
-
-feature/* → novas funcionalidades
-
-Pull Requests devem passar por code review antes do merge.
-
-🤝 Contribuição
-
-Fork o projeto
-
-Crie uma branch
-
-git checkout -b feature/nova-feature
-
-
-Commit
-
-git commit -m "feat: descrição"
-
-
-Push
-
-git push origin feature/nova-feature
-
-
-Abra um Pull Request
-
-📄 Licença
-
-Distribuído sob licença MIT.
+# Safra Plus | Inteligencia de Dados e Decisao Agricola
+
+## 1. Proposito do Sistema
+O Safra Plus e uma plataforma de suporte a decisao estrategica voltada ao agronegocio. O sistema integra dados economicos com variaveis agricolas para mitigar o risco financeiro do pequeno e medio produtor rural.
+
+* Problema: Incerteza sobre o custo de oportunidade (Plantio vs. Renda Fixa/Selic).
+* Publico-alvo: Pequenos agricultores e cooperativas.
+* Visao Geral: A plataforma processa modelos de recomendacao para comparar lucros estimados de safras contra rendimentos financeiros conservadores.
+
+## 2. Arquitetura do Sistema
+O projeto utiliza uma arquitetura de sistemas distribuidos, priorizando o desacoplamento entre a coleta de dados e a regra de negocio core.
+
+### Fluxo de Comunicacao
+1. Frontend (React) consome a API REST do Core Backend (Spring Boot).
+2. O Backend delega processamentos intensivos e web scraping para o servico Python via RabbitMQ.
+3. O servico Python processa os algoritmos e devolve os resultados para persistencia em banco de dados SQL.
+
+### Diagrama Arquitetural
+[ Usuario ] -> [ Frontend React ] -> [ Backend Spring Boot ]
+                                            |
+                                     [ Message Broker RabbitMQ ]
+                                            |
+                                     [ Service Python / Scraper ] -> [ Database SQL ]
+
+## 3. Tecnologias Utilizadas
+
+### Frontend
+* Framework: React.js
+* Gerenciador de Pacotes: NPM/Yarn
+* Comunicacao: Axios para integracao com API REST
+
+### Backend Core
+* Linguagem: Java 17+
+* Framework: Spring Boot 3.x
+* Mensageria: RabbitMQ (AMQP Protocol)
+* Gerenciamento de Dependencias: Maven
+
+### Intelligence Service
+* Linguagem: Python 3.10+
+* Bibliotecas: Scrapy / Pandas para analise de dados e scraping de indices financeiros
+
+### Infraestrutura
+* Containerizacao: Docker
+* Orquestracao: Docker Compose
+* Banco de Dados: PostgreSQL / MySQL
+
+## 4. Estrutura de Diretorios
+
+* /backend: Servico principal responsavel pelas regras de negocio e API.
+* /frontend: Interface de usuario e dashboards analiticos.
+* /scraper-api: Motor de calculo financeiro e coleta de dados externos em Python.
+* /docker: Arquivos de configuracao de ambiente e redes.
+
+## 5. Como Rodar o Projeto Localmente
+
+### Pre-requisitos
+* Docker e Docker Compose instalados.
+
+### Execucao via Docker (Recomendado)
+1. Clone o repositorio.
+2. Na raiz do projeto, execute:
+   docker-compose up --build
+3. Acesse a aplicacao em http://localhost:3000.
+
+### Execucao Manual (Modo Desenvolvimento)
+* Backend: Executar via Maven (./mvnw spring-boot:run) na porta 8080.
+* Frontend: Executar via npm install && npm start na porta 3000.
+* Scraper: Executar script python com as dependencias do requirements.txt instaladas.
+
+## 6. Fluxo de Desenvolvimento (Git Workflow)
+O projeto segue o modelo GitFlow simplificado:
+* main: Codigo estavel em producao.
+* develop: Branch de integracao de funcionalidades.
+* feature/*: Branches para novas implementacoes.
+
+## 7. Endpoints Principais (Exemplos)
+* POST /api/v1/auth/login: Autenticacao.
+* GET /api/v1/recommendations: Retorna o comparativo entre plantio e Selic.
+* POST /api/v1/safra: Registro de novos dados agricolas.
