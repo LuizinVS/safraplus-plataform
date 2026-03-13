@@ -15,13 +15,6 @@ O projeto utiliza uma arquitetura de sistemas distribuidos, priorizando o desaco
 2. O Backend delega processamentos intensivos e web scraping para o servico Python via RabbitMQ.
 3. O servico Python processa os algoritmos e devolve os resultados para persistencia em banco de dados SQL.
 
-### Diagrama Arquitetural
-[ Usuario ] -> [ Frontend React ] -> [ Backend Spring Boot ]
-                                            |
-                                     [ Message Broker RabbitMQ ]
-                                            |
-                                     [ Service Python / Scraper ] -> [ Database SQL ]
-
 ## 3. Tecnologias Utilizadas
 
 ### Frontend
