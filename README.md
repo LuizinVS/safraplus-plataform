@@ -15,12 +15,3 @@ O **Safra Plus** é uma plataforma de suporte à decisão desenvolvida para pequ
 Através de uma integração inteligente entre dados agrícolas e índices financeiros, o sistema gera recomendações precisas para maximizar a rentabilidade do agricultor.
 
 ---
-
-### Diferenciais Técnicos (Stack)
-
-* **Backend:** Desenvolvido em **Java + Spring Boot**, focado em uma API REST de alta performance.
-* **Frontend:** Interface construída com **React**, priorizando a experiência do usuário (UX).
-* **Lógica de Inteligência:** Scripts em **Python** processam os cálculos de viabilidade financeira.
-* **Mensageria:** **RabbitMQ** orquestra a comunicação entre os serviços, garantindo estabilidade e escalabilidade.
-* **Infraestrutura:** Ambiente totalmente conteinerizado com **Docker**, facilitando o deploy e a configuração.
-* **Persistência:** Modelagem de dados robusta utilizando **SQL**.
