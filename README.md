@@ -24,19 +24,3 @@ Através de uma integração inteligente entre dados agrícolas e índices finan
 * **Mensageria:** **RabbitMQ** orquestra a comunicação entre os serviços, garantindo estabilidade e escalabilidade.
 * **Infraestrutura:** Ambiente totalmente conteinerizado com **Docker**, facilitando o deploy e a configuração.
 * **Persistência:** Modelagem de dados robusta utilizando **SQL**.
-
----
-
-### Como Rodar a Aplicação
-
-Para subir todo o ecossistema (Backend, Frontend, RabbitMQ e Banco de Dados), basta ter o Docker instalado e executar:
-
-```bash
-# Clone o repositório
-git clone [https://github.com/SEU_USUARIO/safra-plus.git](https://github.com/SEU_USUARIO/safra-plus.git)
-
-# Entre na pasta
-cd safra-plus
-
-# Suba os containers
-docker-compose up --build
