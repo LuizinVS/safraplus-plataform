@@ -1,64 +1,42 @@
-# safraplus-plataform
+# Safra Plus 🌾 | Inteligência de Dados para o Campo
 
-# Padrões de Desenvolvimento e Contribuição
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![RabbitMQ](https://img.shields.io/badge/RabbitMQ-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white)
 
-Para garantir a qualidade, estabilidade e organização do nosso código, seguimos um conjunto de regras para o versionamento com Git. Toda contribuição ao projeto deve, obrigatoriamente, seguir as diretrizes abaixo.
+---
 
-## 📜 Regra de Ouro: Proibido Push Direto
+### 📖 Sobre o Projeto
+O **Safra Plus** é uma plataforma de suporte à decisão desenvolvida para pequenos produtores rurais. O sistema resolve um dilema real do campo: **"Vale mais a pena investir no plantio agora ou deixar o capital rendendo na Selic?"**.
 
-**É estritamente proibido fazer push direto nas branches `main` e `develop`.**
+Através de uma integração inteligente entre dados agrícolas e índices financeiros, o sistema gera recomendações precisas para maximizar a rentabilidade do agricultor.
 
-- A branch `main` representa o código em produção (stable).
-- A branch `develop` representa a versão mais recente do desenvolvimento (unstable).
+---
 
-Essas branches são protegidas e todas as alterações devem ser integradas exclusivamente via **Pull Requests**.
+### 🛠️ Diferenciais Técnicos (Stack)
 
-## 🚀 Fluxo de Trabalho (Workflow)
+* **Backend:** Desenvolvido em **Java + Spring Boot**, focado em uma API REST de alta performance.
+* **Frontend:** Interface construída com **React**, priorizando a experiência do usuário (UX).
+* **Lógica de Inteligência:** Scripts em **Python** processam os cálculos de viabilidade financeira.
+* **Mensageria:** **RabbitMQ** orquestra a comunicação entre os serviços, garantindo estabilidade e escalabilidade.
+* **Infraestrutura:** Ambiente totalmente conteinerizado com **Docker**, facilitando o deploy e a configuração.
+* **Persistência:** Modelagem de dados robusta utilizando **SQL**.
 
-Todo novo desenvolvimento, seja uma nova funcionalidade, correção de bug ou melhoria, deve ser feito em uma **feature branch**.
+---
 
-### Passo a Passo
+### 🚀 Como Rodar a Aplicação
 
-1.  **Sincronize sua base:** Antes de começar, garanta que sua branch `develop` local está atualizada.
-    ```bash
-    git checkout develop
-    git pull origin develop
-    ```
+Para subir todo o ecossistema (Backend, Frontend, RabbitMQ e Banco de Dados), basta ter o Docker instalado e executar:
 
-2.  **Crie sua Feature Branch:** Crie uma nova branch a partir de `develop`. Use um nome descritivo e padronizado.
+```bash
+# Clone o repositório
+git clone [https://github.com/SEU_USUARIO/safra-plus.git](https://github.com/SEU_USUARIO/safra-plus.git)
 
-    **Padrão de Nomenclatura:** `tipo/escopo-descricao-curta`
+# Entre na pasta
+cd safra-plus
 
-    -   **`feature/`**: Para novas funcionalidades.
-        -   *Exemplo:* `feature/backend-setup-ci`
-        -   *Exemplo:* `feature/frontend-login-screen`
-    -   **`fix/`**: Para correção de bugs.
-        -   *Exemplo:* `fix/user-authentication-bug`
-    -   **`chore/`**: Para tarefas de manutenção (updates de libs, ajustes de config, etc.).
-        -   *Exemplo:* `chore/update-docker-dependencies`
-    -   **`docs/`**: Para alterações na documentação.
-        -   *Exemplo:* `docs/add-contribution-guide`
-
-    **Comando para criar a branch:**
-    ```bash
-    git checkout -b feature/nome-da-sua-feature
-    ```
-
-3.  **Desenvolva e Faça Commits:** Trabalhe na sua branch. Faça commits pequenos, atômicos e com mensagens claras.
-
-4.  **Envie sua Branch para o Repositório Remoto:**
-    ```bash
-    git push origin feature/nome-da-sua-feature
-    ```
-
-5.  **Abra um Pull Request (PR):**
-    -   Acesse o repositório no GitHub/GitLab/Bitbucket.
-    -   Abra um Pull Request da sua `feature/nome-da-sua-feature` para a branch `develop`.
-    -   Preencha o template do PR, descrevendo o que foi feito, o motivo e como testar.
-    -   Marque pelo menos um revisor (`reviewer`) do time.
-
-6.  **Code Review:** Seu PR será revisado por outros membros da equipe. Fique atento aos comentários e faça os ajustes solicitados.
-
-7.  **Merge:** Após a aprovação, o PR será "merged" na branch `develop`. Sua tarefa está concluída!
-
-Obrigado por seguir este fluxo e ajudar a manter nosso projeto saudável e organizado! 👍
+# Suba os containers
+docker-compose up --build
